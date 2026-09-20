@@ -3,9 +3,9 @@
 cask "ketch" do
   arch arm: "aarch64", intel: "x86_64"
 
-  version "0.4.3"
-  sha256 arm:   "be643e30e5c4ca0c41b5963eca244f0a2147cc37ecc035b43bd6bcdd4693c202",
-         intel: "2586932f38d8ab89b24d33874a996cc2dddf4e9f93eb8f0a9fe5a6691815728c"
+  version "0.4.7"
+  sha256 arm:   "0d01ab5154e4ce9593f774a11b66e7d240433ee2c0953656f4722450ad637d78",
+         intel: "14c542cbb5cadc743fdc5d324ea2dc48a5bf519038eacfe04ba79f77113b21cd"
 
   url "https://github.com/listepo/ketch/releases/download/v#{version}/ketch-#{arch}-apple-darwin.tar.gz"
   name "ketch"
@@ -32,7 +32,7 @@ cask "ketch" do
     # from there, not from HOME. ~/.ketch is the one path under the home
     # directory a step may write, and the only one ketch touches.
     if_path_exists ".ketch/store/ketch", base: :home do
-      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2" self update',
+      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2" self upgrade',
                                       "ketch", "{{user}}", "{{staged_path}}/ketch"],
                      network_access: true,
                      writable_paths: [".ketch"],
