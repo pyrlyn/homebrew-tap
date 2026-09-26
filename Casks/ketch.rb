@@ -3,9 +3,9 @@
 cask "ketch" do
   arch arm: "aarch64", intel: "x86_64"
 
-  version "0.5.0"
-  sha256 arm:   "34830da6ae3adbd1f1d2cc454eeb89fa64f911538cad9b5fef7a381c5454f9fe",
-         intel: "0d71f7aef89443586ae15a3047b412410a519cf86e4b50b9a4e3e66ffffba8be"
+  version "0.6.0"
+  sha256 arm:   "b2158a687a97b85700b1a393c5aae2b9e9d999dd2a75bd02396ab4092729a25d",
+         intel: "8ceefec4e5f7dbd0239e8bc212ba0323ef92823168eff25fa7affee14065930c"
 
   url "https://github.com/listepo/ketch/releases/download/v#{version}/ketch-#{arch}-apple-darwin.tar.gz"
   name "ketch"
@@ -26,21 +26,22 @@ cask "ketch" do
     # downloads and verifies itself. Gatekeeper would refuse the quarantined
     # bootstrap otherwise, as it refuses any command-line binary that is not
     # notarised; install.sh lifts the same attribute.
-    run "/usr/bin/xattr", args: ["-d", "com.apple.quarantine", "{{staged_path}}/ketch"], must_succeed: false
+    # The binary sits in the tarball's one directory, `ketch-<target>/`.
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}"], must_succeed: false
     # The steps run with a throwaway HOME and the DSL has no token for the
     # real one, so the shell asks the user database instead: `~user` expands
     # from there, not from HOME. ~/.ketch is the one path under the home
     # directory a step may write, and the only one ketch touches.
     if_path_exists ".ketch/store/ketch", base: :home do
-      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2" self upgrade',
-                                      "ketch", "{{user}}", "{{staged_path}}/ketch"],
+      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2"/*/ketch self upgrade',
+                                      "ketch", "{{user}}", "{{staged_path}}"],
                      network_access: true,
                      writable_paths: [".ketch"],
                      writable_base:  :home
     end
     unless_path_exists ".ketch/store/ketch", base: :home do
-      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2" self install',
-                                      "ketch", "{{user}}", "{{staged_path}}/ketch"],
+      run "/bin/sh", args:           ["-c", 'eval "r=~$1/.ketch" && KETCH_ROOT="$r" exec "$2"/*/ketch self install',
+                                      "ketch", "{{user}}", "{{staged_path}}"],
                      network_access: true,
                      writable_paths: [".ketch"],
                      writable_base:  :home
