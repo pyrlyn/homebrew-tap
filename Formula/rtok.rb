@@ -7,10 +7,6 @@ class Rtok < Formula
       url "https://github.com/pyrlyn/rtok/releases/download/v0.1.0/rtok-aarch64-apple-darwin.tar.xz"
       sha256 "9c2a95774a3ed0f6a013a104b9b4c338bac52a29b0a32b2c5c89c38d6329d099"
     end
-    if Hardware::CPU.intel?
-      url "https://github.com/pyrlyn/rtok/releases/download/v0.1.0/rtok-x86_64-apple-darwin.tar.xz"
-      sha256 "8cadc2ee899ccd605b8152010a5dd3ae5375c07ec1d603cbe2550760b5c44010"
-    end
   end
   if OS.linux?
     if Hardware::CPU.intel?
@@ -21,7 +17,6 @@ class Rtok < Formula
 
   BINARY_ALIASES = {
     "aarch64-apple-darwin": {},
-    "x86_64-apple-darwin": {},
     "x86_64-unknown-linux-gnu": {}
   }
 
@@ -42,9 +37,6 @@ class Rtok < Formula
 
   def install
     if OS.mac? && Hardware::CPU.arm?
-      bin.install "rtok"
-    end
-    if OS.mac? && Hardware::CPU.intel?
       bin.install "rtok"
     end
     if OS.linux? && Hardware::CPU.intel?
