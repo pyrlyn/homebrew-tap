@@ -53,4 +53,10 @@ class Rtok < Formula
     # sample files.
     pkgshare.install(*leftover_contents) unless leftover_contents.empty?
   end
+
+  test do
+    # The formula is the path users install. Without this block a tarball
+    # that does not contain a working `rtok` still audits as a valid formula.
+    system bin/"rtok", "--version"
+  end
 end
