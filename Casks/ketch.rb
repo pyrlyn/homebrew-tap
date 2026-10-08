@@ -66,4 +66,13 @@ cask "ketch" do
   caveats do
     path_environment_variable "#{Dir.home}/.ketch/bin"
   end
+
+  test do
+    # stage_only leaves the bootstrap binary in the tarball directory instead
+    # of linking it into the prefix, so the smoke test has to find it there.
+    binary = Dir["#{staged_path}/**/ketch"].find { |path| File.file?(path) }
+    raise "staged ketch binary not found" if binary.nil?
+
+    system binary, "--version"
+  end
 end
