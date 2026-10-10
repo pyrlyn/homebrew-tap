@@ -1,3 +1,2 @@
 - T1. Fix stale README: the sync workflow it describes was removed
-- T2. Drop Intel macOS variants or confirm they are still published
 - T4. Add rulebook files and formula smoke tests
