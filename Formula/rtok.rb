@@ -1,6 +1,6 @@
 class Rtok < Formula
   desc "Token-reduction CLI for AI coding agents: hooks, MCP server and API proxy with pluggable methods"
-  homepage "https://pyrlyn.github.io/rtok/"
+  homepage "https://github.com/pyrlyn/rtok"
   version "0.1.0"
   if OS.mac?
     if Hardware::CPU.arm?
