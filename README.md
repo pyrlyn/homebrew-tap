@@ -4,7 +4,8 @@ Homebrew tap for listepo tools.
 
 ```bash
 brew tap pyrlyn/tap
-brew install --cask ketch   # existing
+brew install --cask ketch     # existing
+brew install --cask mailune  # arm64 macOS app; no Intel cask
 brew install rtok           # formula synced from pyrlyn/rtok releases
 ```
 
