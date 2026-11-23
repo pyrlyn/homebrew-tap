@@ -1,6 +1,8 @@
 # pyrlyn/homebrew-tap
 
-Homebrew tap for listepo tools.
+Homebrew tap for pyrlyn tools.
+
+This tap currently ships `Casks/ketch.rb`, `Casks/mailune.rb` (arm64 only) and `Formula/rtok.rb`.
 
 ```bash
 brew tap pyrlyn/tap
